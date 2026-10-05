@@ -1,6 +1,6 @@
 {
   "name": "@sweberdev/sigmoid",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Scroll motion without the JavaScript tax: native CSS scroll-driven animations, spring and S-curve easings as CSS linear(), a tiny fallback, reduced motion by default.",
   "license": "MIT",
   "author": "Seya Weber (https://github.com/sxwxbxr)",
