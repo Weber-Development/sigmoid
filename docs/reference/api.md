@@ -1,0 +1,58 @@
+---
+title: API
+description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
+---
+
+## @sweberdev/sigmoid
+
+| Export | Signature |
+|---|---|
+| `reveal` | `(targets, { keyframes?, range?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `parallax` | `(targets, { distance?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `scrub` | `(targets, keyframes, { source?, axis?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `progress` | `(targets, { source?, axis? }) => Controller` |
+| `init` | `(root = document, { force? }) => stop()`: starts the fallback for `data-sigmoid` |
+| `supportsScrollTimeline` | `() => boolean` |
+| `prefersReducedMotion` | `() => boolean` |
+| `presets` | the keyframes behind the preset names |
+| `parseRange`, `rangeBounds`, `viewProgress` | the view-timeline maths of the fallback |
+
+`targets` is an `Element`, a selector, an iterable of elements, `null` or `undefined`. `reducedMotion` is `"skip"` (default) or `"allow"`.
+
+## @sweberdev/sigmoid/easing
+
+Also exported from the main entry.
+
+| Export | Signature |
+|---|---|
+| `spring` | `({ duration?, bounce?, stiffness?, damping?, mass?, velocity? }) => Easing` |
+| `logistic` | `(steepness = 10) => Easing` |
+| `bezier` | `(x1, y1, x2, y2) => Easing` |
+| `easing` | `(fn, css?, duration?) => Easing` |
+| `toLinear` | `(fn, { samples?, tolerance? }) => string` |
+| `ease` | `out`, `inOut`, `standard`, `sigmoid`, `smooth`, `bouncy`, `wobbly`, `linear` |
+| `cssVariables` | `(easings = ease, prefix = "--sigmoid-ease-") => string` |
+
+```ts
+interface Easing {
+  (t: number): number;
+  readonly css: string;
+  readonly duration?: number; // ms, springs only
+}
+```
+
+## @sweberdev/sigmoid/sigmoid.css
+
+`data-sigmoid` presets, `--sigmoid-*` custom properties and the `--sigmoid-ease-*` variables. See [CSS only](../guides/css.md).
+
+## @sweberdev/sigmoid-react
+
+| Export | Props / signature |
+|---|---|
+| `Reveal` | `as?`, `preset?`, `range?`, `easing?`, `reducedMotion?` and the props of the element |
+| `Parallax` | `as?`, `distance?`, `reducedMotion?` |
+| `ScrollProgress` | `source?: RefObject<Element>` and `div` props |
+| `useReveal` | `(ref, RevealOptions)` |
+| `useParallax` | `(ref, ParallaxOptions)` |
+| `useScrub` | `(ref, keyframes, ScrubOptions)` |
+| `useReducedMotion` | `() => boolean` |

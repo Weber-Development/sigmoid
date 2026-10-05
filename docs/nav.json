@@ -1,0 +1,22 @@
+{
+  "sections": [
+    {
+      "label": "Start",
+      "items": ["introduction", "getting-started"]
+    },
+    {
+      "label": "Guides",
+      "items": [
+        "guides/css",
+        "guides/javascript",
+        "guides/easing",
+        "guides/react",
+        "guides/reduced-motion"
+      ]
+    },
+    {
+      "label": "Reference",
+      "items": ["reference/api", "reference/browser-support"]
+    }
+  ]
+}
