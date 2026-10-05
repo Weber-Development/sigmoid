@@ -1,7 +1,14 @@
 import { ease } from "@sweberdev/sigmoid";
 import { act, cleanup, render } from "@testing-library/react";
+import { useRef } from "react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { Parallax, Reveal, ScrollProgress, useReducedMotion } from "../src/index";
+import {
+  Parallax,
+  Reveal,
+  ScrollProgress,
+  useReducedMotion,
+  useScrollProgress,
+} from "../src/index";
 
 let calls: {
   el: Element;
@@ -95,5 +102,32 @@ describe("useReducedMotion", () => {
       render(<Probe />);
     });
     expect(value).toBe(true);
+  });
+});
+
+describe("useScrollProgress", () => {
+  it("returns the view progress of the element", () => {
+    Object.defineProperty(window, "innerHeight", { value: 800, configurable: true });
+    let value = -1;
+    function Probe() {
+      const ref = useRef<HTMLDivElement>(null);
+      value = useScrollProgress(ref, { range: "cover" });
+      return <div ref={ref} />;
+    }
+    act(() => {
+      render(<Probe />);
+    });
+    // jsdom has no layout: a 0px element at the top is past the cover range.
+    expect(value).toBe(1);
+  });
+
+  it("passes shift to reveal", () => {
+    Object.assign(window, { ViewTimeline: class {}, ScrollTimeline: class {} });
+    render(<Reveal shift={16}>x</Reveal>);
+    expect((calls[0]?.options as Record<string, unknown>).rangeStart).toBe("entry 16%");
+    // biome-ignore lint/suspicious/noExplicitAny: test cleanup
+    delete (window as any).ViewTimeline;
+    // biome-ignore lint/suspicious/noExplicitAny: test cleanup
+    delete (window as any).ScrollTimeline;
   });
 });

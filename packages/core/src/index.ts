@@ -25,6 +25,8 @@ export {
   scrub,
   supportsScrollTimeline,
   type Targets,
+  type TrackOptions,
+  track,
 } from "./motion";
 export { type PresetName, presets } from "./presets";
 export {

@@ -20,7 +20,13 @@ import { Reveal } from "@sweberdev/sigmoid-react";
 </Reveal>
 ```
 
-`preset` takes a preset name or your own keyframes.
+`preset` takes a preset name or your own keyframes. In a list, `shift` staggers the items:
+
+```tsx
+{items.map((item, i) => (
+  <Reveal key={item.id} as="li" preset="fade-up" shift={i * 8}>…</Reveal>
+))}
+```
 
 ## Parallax
 
@@ -46,6 +52,7 @@ useReveal(ref, { keyframes: "blur-in" });
 useParallax(ref, { distance: 40 });
 useScrub(ref, [{ opacity: 1 }, { opacity: 0 }]);
 const reduced = useReducedMotion();
+const progress = useScrollProgress(ref, { range: "cover" }); // 0 to 1, re-renders on change
 ```
 
 The animation restarts only when the options change by value, not on every render.

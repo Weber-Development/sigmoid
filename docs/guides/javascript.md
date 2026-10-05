@@ -31,6 +31,16 @@ reveal("h2", { keyframes: [{ letterSpacing: "0.3em", opacity: 0 }, {}] });
 
 Ranges: `cover`, `contain`, `entry`, `exit`, `entry-crossing`, `exit-crossing`, each with a percentage, e.g. `"entry 25% contain 50%"`. The [MDN page on animation-range](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-range) explains them with diagrams.
 
+### Stagger
+
+Lists and grids look better when the items arrive one after another. `stagger` starts each further element later by that percentage of its range:
+
+```ts
+reveal(".team li", { keyframes: "fade-up", stagger: 8 });
+```
+
+`shift` moves the range of a single element, e.g. `shift: index * 8` when you call `reveal` per item.
+
 ## parallax
 
 ```ts
@@ -58,6 +68,18 @@ progress("#reading-bar");
 ```
 
 A `scrub` from `scaleX(0)` to `scaleX(1)` with the transform origin on the left. It stays on with reduced motion because it only moves when the user scrolls.
+
+## track
+
+For values CSS cannot animate, such as a counter, a video frame or a canvas, `track` reports the view progress (0 to 1) of each element whenever it changes:
+
+```ts
+track(".stat", (p, el) => {
+  el.textContent = Math.round(p * 1200).toLocaleString();
+}, { range: "entry 0% cover 50%" });
+```
+
+Progress of the whole page: `track(document.body, (p) => …, { range: "contain" })`. `track` always runs in JavaScript, one passive listener for all elements, and is not affected by reduced motion because it only reports a number.
 
 ## Fallback
 
