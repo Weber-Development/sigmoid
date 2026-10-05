@@ -124,7 +124,7 @@ describe("useScrollProgress", () => {
   it("passes shift to reveal", () => {
     Object.assign(window, { ViewTimeline: class {}, ScrollTimeline: class {} });
     render(<Reveal shift={16}>x</Reveal>);
-    expect((calls[0]?.options as Record<string, unknown>).rangeStart).toBe("entry 16%");
+    expect((calls[0]?.options as Record<string, unknown> | undefined)?.rangeStart).toBe("entry 16%");
     // biome-ignore lint/suspicious/noExplicitAny: test cleanup
     delete (window as any).ViewTimeline;
     // biome-ignore lint/suspicious/noExplicitAny: test cleanup
