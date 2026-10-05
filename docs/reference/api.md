@@ -7,7 +7,8 @@ description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
 
 | Export | Signature |
 |---|---|
-| `reveal` | `(targets, { keyframes?, range?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `reveal` | `(targets, { keyframes?, range?, stagger?, shift?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `track` | `(targets, (progress, element) => void, { range? }) => Controller` |
 | `parallax` | `(targets, { distance?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `scrub` | `(targets, keyframes, { source?, axis?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `progress` | `(targets, { source?, axis? }) => Controller` |
@@ -49,10 +50,11 @@ interface Easing {
 
 | Export | Props / signature |
 |---|---|
-| `Reveal` | `as?`, `preset?`, `range?`, `easing?`, `reducedMotion?` and the props of the element |
+| `Reveal` | `as?`, `preset?`, `range?`, `shift?`, `easing?`, `reducedMotion?` and the props of the element |
 | `Parallax` | `as?`, `distance?`, `reducedMotion?` |
 | `ScrollProgress` | `source?: RefObject<Element>` and `div` props |
 | `useReveal` | `(ref, RevealOptions)` |
 | `useParallax` | `(ref, ParallaxOptions)` |
 | `useScrub` | `(ref, keyframes, ScrubOptions)` |
+| `useScrollProgress` | `(ref, { range? }) => number` |
 | `useReducedMotion` | `() => boolean` |

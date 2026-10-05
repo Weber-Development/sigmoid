@@ -10,6 +10,8 @@ import {
   reveal,
   type ScrubOptions,
   scrub,
+  type TrackOptions,
+  track,
 } from "@sweberdev/sigmoid";
 import {
   type ComponentPropsWithoutRef,
@@ -58,6 +60,24 @@ export function useScrub(
   useMotion(ref, (el) => scrub(el, keyframes, options), keyOf([keyframes, options]));
 }
 
+/**
+ * The view progress (0 to 1) of the referenced element, for counters and
+ * other values CSS cannot animate. Re-renders on every change, so keep the
+ * component small.
+ */
+export function useScrollProgress(
+  ref: RefObject<Element | null>,
+  options: TrackOptions = {},
+): number {
+  const [value, setValue] = useState(0);
+  const range = options.range;
+  useEffect(() => {
+    const c = track(ref.current, setValue, range ? { range } : {});
+    return () => c.cancel();
+  }, [ref, range]);
+  return value;
+}
+
 /** `true` when the user prefers reduced motion. Updates when the setting changes. */
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -85,6 +105,8 @@ export type RevealProps<T extends ElementType = "div"> = Polymorphic<
     range?: string;
     easing?: Easing | string;
     reducedMotion?: "skip" | "allow";
+    /** Percent the range starts later. In a list, `index * 8` staggers the items. */
+    shift?: number;
   }
 >;
 
@@ -99,10 +121,11 @@ export function Reveal<T extends ElementType = "div">({
   range,
   easing,
   reducedMotion,
+  shift,
   ...rest
 }: RevealProps<T>) {
   const ref = useRef<Element>(null);
-  useReveal(ref, { keyframes: preset, range, easing, reducedMotion });
+  useReveal(ref, { keyframes: preset, range, easing, reducedMotion, shift });
   return createElement(as ?? "div", { ...rest, ref });
 }
 

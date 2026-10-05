@@ -44,7 +44,12 @@ ${keyframes}
       animation: var(--sigmoid-keyframes, none) both;
       animation-timing-function: var(--sigmoid-easing, var(--sigmoid-ease-out));
       animation-timeline: view();
-      animation-range: var(--sigmoid-range, entry 0% cover 40%);
+      /* --sigmoid-index staggers lists: each step starts --sigmoid-stagger later. */
+      --sigmoid-shift: calc(var(--sigmoid-index, 0) * var(--sigmoid-stagger, 8%));
+      animation-range: var(
+        --sigmoid-range,
+        entry var(--sigmoid-shift) cover calc(40% + var(--sigmoid-shift))
+      );
     }
 ${selectors}
     [data-sigmoid="parallax"] {

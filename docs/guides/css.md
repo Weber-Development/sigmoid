@@ -33,6 +33,20 @@ description: data-sigmoid attributes, custom properties and the easing variables
 | `--sigmoid-easing` | `var(--sigmoid-ease-out)` | any CSS easing |
 | `--sigmoid-distance` | `24px` | movement of the `fade-*` and `slide-*` presets |
 | `--sigmoid-parallax` | `60` | pixels for `parallax`, without unit |
+| `--sigmoid-index` | `0` | position in a list, for staggering |
+| `--sigmoid-stagger` | `8%` | how much later each index starts (with `%`) |
+
+### Staggered lists
+
+```html
+<ul>
+  <li data-sigmoid="fade-up" style="--sigmoid-index: 0">…</li>
+  <li data-sigmoid="fade-up" style="--sigmoid-index: 1">…</li>
+  <li data-sigmoid="fade-up" style="--sigmoid-index: 2">…</li>
+</ul>
+```
+
+The index shifts the default range. When you set your own `--sigmoid-range`, the index is ignored.
 
 `init()` reads the same properties for the JavaScript fallback.
 

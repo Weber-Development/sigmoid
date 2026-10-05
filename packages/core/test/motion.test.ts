@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { init } from "../src/auto";
 import { ease } from "../src/easing";
-import { parallax, progress, reveal, scrub, supportsScrollTimeline } from "../src/motion";
+import { parallax, progress, reveal, scrub, supportsScrollTimeline, track } from "../src/motion";
 
 class FakeAnimation {
   currentTime: number | null = 0;
@@ -153,5 +153,52 @@ describe("init", () => {
     expect(animations[0]?.currentTime).toBe(500);
     stop();
     expect(animations.every((x) => x.cancelled)).toBe(true);
+  });
+});
+
+describe("stagger and shift", () => {
+  it("starts each further element later in the fallback", () => {
+    const els = [box(750), box(750), box(750)];
+    reveal(els, { range: "entry 0% entry 100%", easing: "linear", stagger: 25 });
+    // Half way through entry: 50%, then 25% and 0% for the later ones.
+    expect(animations.map((a) => a.currentTime)).toEqual([500, 250, 0]);
+  });
+
+  it("passes shifted ranges to native timelines", () => {
+    native();
+    reveal([box(0), box(0)], { stagger: 8, shift: 2 });
+    expect(animations[1]?.options.rangeStart).toBe("entry 10%");
+    expect(animations[1]?.options.rangeEnd).toBe("cover 50%");
+  });
+
+  it("init reads --sigmoid-index and --sigmoid-stagger", () => {
+    const el = box(750);
+    el.setAttribute("data-sigmoid", "fade-in");
+    el.style.setProperty("--sigmoid-index", "2");
+    el.style.setProperty("--sigmoid-stagger", "10%");
+    init();
+    // Default range entry 0% cover 40%, shifted by 20%: entry 20% (20px) to cover 60% (540px).
+    expect(animations[0]?.currentTime).toBeCloseTo((30 / 520) * 1000, 6);
+  });
+});
+
+describe("track", () => {
+  it("reports progress only when it changes", () => {
+    const el = box(350);
+    const calls: number[] = [];
+    const c = track(el, (p) => calls.push(p));
+    expect(calls).toEqual([0.5]);
+    window.dispatchEvent(new Event("scroll"));
+    expect(calls).toEqual([0.5]);
+    c.cancel();
+    expect(track(null, () => {}).animations).toHaveLength(0);
+  });
+
+  it("works on native browsers and with reduced motion", () => {
+    native();
+    reduced = true;
+    const seen: number[] = [];
+    track(box(700), (p) => seen.push(p), { range: "entry" });
+    expect(seen).toEqual([1]);
   });
 });
