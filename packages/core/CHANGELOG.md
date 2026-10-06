@@ -1,5 +1,11 @@
 # @sweberdev/sigmoid
 
+## 0.9.0
+
+### Minor Changes
+
+- f9af841: Release candidate for 1.0: the public API is frozen, `refresh()` is now in the API reference, and the stability policy applies from this version on.
+
 ## 0.8.0
 
 ### Minor Changes
