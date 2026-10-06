@@ -13,6 +13,8 @@
         "guides/recipes",
         "guides/react",
         "guides/vue",
+        "guides/svelte",
+        "guides/astro",
         "guides/reduced-motion"
       ]
     },

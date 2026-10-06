@@ -341,3 +341,26 @@ describe("init count", () => {
     stop();
   });
 });
+
+describe("linked animations", () => {
+  it("animates followers from the timeline element, also where CSS handles data-sigmoid", () => {
+    native();
+    const stage = box(2000);
+    stage.setAttribute("data-sigmoid-timeline", "stage");
+    const a = box(0);
+    a.setAttribute("data-sigmoid-follow", "stage");
+    a.setAttribute("data-sigmoid-preset", "scale-in");
+    const orphan = box(0);
+    orphan.setAttribute("data-sigmoid-follow", "missing");
+    const stop = init();
+    expect(animations).toHaveLength(1);
+    expect(animations[0]?.keyframes[0]?.transform).toBe("scale(0.94)");
+    const timeline = animations[0]?.options.timeline as unknown as {
+      options: { subject: Element };
+    };
+    expect(timeline.options.subject).toBe(stage);
+    expect(animations[0]?.options.rangeStart).toBe("cover 0%");
+    stop();
+    expect(animations[0]?.cancelled).toBe(true);
+  });
+});

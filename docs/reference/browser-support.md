@@ -11,6 +11,8 @@ description: Where the native path runs and where the fallback takes over.
 
 Check [caniuse.com/scroll-driven-animations](https://caniuse.com/mdn-css_properties_animation-timeline) for the current state in Firefox.
 
+CI runs the same scroll scenarios in real Chromium, Firefox and WebKit on every change: on the page, inside a scroll container, on the inline axis, with scrub ranges, linked animations and counters. Chromium and WebKit use the native path (and the forced fallback for comparison), Firefox the fallback. Every path must give the same result.
+
 `supportsScrollTimeline()` tells you which path runs. Every controller also has `native`.
 
 ## Server-side rendering
