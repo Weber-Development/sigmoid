@@ -8,6 +8,7 @@ Scroll motion without the JavaScript tax. Sigmoid runs reveals, parallax and scr
 |---|---|
 | [`@sweberdev/sigmoid`](packages/core) | `reveal`, `parallax`, `scrub`, `progress`, `init`, easing curves, `sigmoid.css` |
 | [`@sweberdev/sigmoid-react`](packages/react) | `Reveal`, `Parallax`, `ScrollProgress`, `useReveal`, `useScrub`, `useReducedMotion` |
+| [`@sweberdev/sigmoid-vue`](packages/vue) | `v-reveal`, `v-parallax`, `useReveal`, `useScrollProgress`, `useStory` |
 
 ## Zero JavaScript
 

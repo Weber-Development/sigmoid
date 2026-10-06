@@ -11,6 +11,7 @@
         "guides/javascript",
         "guides/easing",
         "guides/react",
+        "guides/vue",
         "guides/reduced-motion"
       ]
     },
