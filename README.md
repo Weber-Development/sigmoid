@@ -60,8 +60,8 @@ import { Reveal, ScrollProgress } from "@sweberdev/sigmoid-react";
 
 | Import | min+gzip |
 |---|---|
-| `reveal` + `init` | about 2.2 kB |
-| everything | about 3.6 kB |
+| `reveal` + `init` | about 2.4 kB |
+| everything | about 3.9 kB |
 | `@sweberdev/sigmoid/easing` | about 1.3 kB |
 
 `pnpm size` checks these budgets in CI.

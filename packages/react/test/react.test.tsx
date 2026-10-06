@@ -8,6 +8,7 @@ import {
   ScrollProgress,
   useReducedMotion,
   useScrollProgress,
+  useStory,
 } from "../src/index";
 
 let calls: {
@@ -131,5 +132,22 @@ describe("useScrollProgress", () => {
     delete (window as any).ViewTimeline;
     // biome-ignore lint/suspicious/noExplicitAny: test cleanup
     delete (window as any).ScrollTimeline;
+  });
+});
+
+describe("useStory", () => {
+  it("returns the active step of the section", () => {
+    Object.defineProperty(window, "innerHeight", { value: 800, configurable: true });
+    let step = -1;
+    function Probe() {
+      const ref = useRef<HTMLDivElement>(null);
+      step = useStory(ref, { steps: 3 }).step;
+      return <div ref={ref} />;
+    }
+    act(() => {
+      render(<Probe />);
+    });
+    // jsdom has no layout: a 0px element at the top has passed "contain".
+    expect(step).toBe(2);
   });
 });

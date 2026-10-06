@@ -1,7 +1,7 @@
 // Writes dist/sigmoid.css from the built easings and presets, so CSS and
 // JavaScript always share the same curves and keyframes.
 import { writeFileSync } from "node:fs";
-import { cssVariables, presets } from "../dist/index.js";
+import { cssVariables, ease, presets } from "../dist/index.js";
 
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 const block = (frame) =>
@@ -68,3 +68,19 @@ ${selectors}
 
 writeFileSync(new URL("../dist/sigmoid.css", import.meta.url), css);
 console.log(`dist/sigmoid.css: ${css.length} bytes`);
+
+// Tailwind v4 theme: ease-bouncy, ease-sigmoid, … next to Tailwind's own
+// ease-in, ease-out and ease-linear, which keep their meaning.
+const { linear: _l, out: _o, inOut: _io, ...own } = ease;
+const tailwind = `/* @sweberdev/sigmoid for Tailwind CSS v4: @import it after "tailwindcss".
+   Adds ease-standard, ease-sigmoid, ease-smooth, ease-bouncy and ease-wobbly. */
+
+@theme {
+${cssVariables(own, "--ease-")
+  .split("\n")
+  .map((l) => `  ${l}`)
+  .join("\n")}
+}
+`;
+writeFileSync(new URL("../dist/tailwind.css", import.meta.url), tailwind);
+console.log(`dist/tailwind.css: ${tailwind.length} bytes`);

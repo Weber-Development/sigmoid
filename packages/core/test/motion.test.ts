@@ -1,7 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { init } from "../src/auto";
 import { ease } from "../src/easing";
-import { parallax, progress, reveal, scrub, supportsScrollTimeline, track } from "../src/motion";
+import {
+  parallax,
+  progress,
+  reveal,
+  scrub,
+  story,
+  supportsScrollTimeline,
+  track,
+} from "../src/motion";
+import { presets } from "../src/presets";
 
 class FakeAnimation {
   currentTime: number | null = 0;
@@ -200,5 +209,44 @@ describe("track", () => {
     const seen: number[] = [];
     track(box(700), (p) => seen.push(p), { range: "entry" });
     expect(seen).toEqual([1]);
+  });
+});
+
+describe("scroll containers", () => {
+  it("measures the fallback against the nearest scroll container", () => {
+    const scroller = document.createElement("div");
+    scroller.style.overflowY = "auto";
+    Object.defineProperty(scroller, "offsetTop", { value: 1000 });
+    Object.defineProperty(scroller, "clientHeight", { value: 400 });
+    Object.defineProperty(scroller, "clientTop", { value: 0 });
+    scroller.scrollTop = 200;
+    document.body.append(scroller);
+    const el = document.createElement("div");
+    // Layout top 1550 = 550 into the container, 350 below its visible top.
+    Object.defineProperty(el, "offsetTop", { value: 1550 });
+    Object.defineProperty(el, "offsetHeight", { value: 100 });
+    scroller.append(el);
+    reveal(el, { range: "entry 0% entry 100%", easing: "linear" });
+    // 400 - 350 = 50 of 100 px entered: half way, whatever the page does.
+    expect(animations[0]?.currentTime).toBe(500);
+  });
+});
+
+describe("story", () => {
+  it("splits the contain range into steps", () => {
+    const el = box(-1200, 2800); // 2800 px section, 1200 px scrolled past its top
+    const seen: number[] = [];
+    story(el, { steps: 4, onStep: (s) => seen.push(s) });
+    // contain runs from 800 to 2800 scrolled; 2000 is 60% through: step 2 of 0..3.
+    expect(seen).toEqual([2]);
+    expect(el.getAttribute("data-sigmoid-step")).toBe("2");
+    expect(el.style.getPropertyValue("--sigmoid-progress")).toBe("0.6");
+  });
+});
+
+describe("presets", () => {
+  it("has ten entrances, all ending at the element's own style", () => {
+    expect(Object.keys(presets)).toHaveLength(10);
+    expect(presets["flip-up"][0].transform).toContain("rotateX");
   });
 });

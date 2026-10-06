@@ -69,6 +69,21 @@ animate(".box", { x: 200 }, { ease: ease.bouncy, duration: ease.bouncy.duration!
 gsap.to(".box", { x: 200, ease: ease.wobbly, duration: 0.8 });
 ```
 
+## Tailwind CSS
+
+With Tailwind CSS v4, import the theme after Tailwind:
+
+```css
+@import "tailwindcss";
+@import "@sweberdev/sigmoid/tailwind.css";
+```
+
+This adds `ease-standard`, `ease-sigmoid`, `ease-smooth`, `ease-bouncy` and `ease-wobbly` next to Tailwind's own `ease-in`, `ease-out` and `ease-linear`:
+
+```html
+<button class="transition-transform duration-500 ease-bouncy hover:scale-105">Buy</button>
+```
+
 ## Custom CSS variables
 
 ```ts

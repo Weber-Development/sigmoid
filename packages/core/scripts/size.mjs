@@ -4,7 +4,7 @@ import { build } from "esbuild";
 
 const dist = new URL("../dist/", import.meta.url).pathname;
 const cases = [
-  ["everything", `export * from "${dist}index.js";`, 3840],
+  ["everything", `export * from "${dist}index.js";`, 4096],
   ["reveal + init", `export { reveal, init } from "${dist}index.js";`, 2560],
   ["easing only", `export * from "${dist}easing.js";`, 1536],
 ];

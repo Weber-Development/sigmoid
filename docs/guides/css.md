@@ -15,6 +15,8 @@ description: data-sigmoid attributes, custom properties and the easing variables
 | `scale-in` | opacity and scale from 94% |
 | `blur-in` | opacity and blur |
 | `clip-up` | revealed from the bottom with `clip-path` |
+| `rotate-in` | opacity, a slight turn and scale |
+| `flip-up` | opacity and a 3D tilt towards the reader |
 | `parallax` | moves against the scroll direction while crossing the viewport |
 | `progress` | scales from 0 to 100% width with the page scroll, e.g. a reading bar |
 

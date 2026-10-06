@@ -10,6 +10,7 @@ import {
   reveal,
   type ScrubOptions,
   scrub,
+  story,
   type TrackOptions,
   track,
 } from "@sweberdev/sigmoid";
@@ -76,6 +77,26 @@ export function useScrollProgress(
     return () => c.cancel();
   }, [ref, range]);
   return value;
+}
+
+/**
+ * The active step (0-based) and progress of a scroll story: a tall section
+ * whose content stays pinned with `position: sticky`. Re-renders only when
+ * the step changes.
+ *
+ * @example const { step } = useStory(ref, { steps: 3 })
+ */
+export function useStory(
+  ref: RefObject<Element | null>,
+  options: { steps: number; range?: string },
+): { step: number } {
+  const [step, setStep] = useState(0);
+  const { steps, range } = options;
+  useEffect(() => {
+    const c = story(ref.current, { steps, onStep: setStep, ...(range ? { range } : {}) });
+    return () => c.cancel();
+  }, [ref, steps, range]);
+  return { step };
 }
 
 /** `true` when the user prefers reduced motion. Updates when the setting changes. */
