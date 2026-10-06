@@ -13,6 +13,7 @@ export {
   toLinear,
 } from "./easing";
 export {
+  type Axis,
   type Controller,
   type MotionOptions,
   type ParallaxOptions,
@@ -22,8 +23,10 @@ export {
   type RevealOptions,
   reveal,
   type ScrubOptions,
+  type SplitText,
   type StoryOptions,
   scrub,
+  splitText,
   story,
   supportsScrollTimeline,
   type Targets,

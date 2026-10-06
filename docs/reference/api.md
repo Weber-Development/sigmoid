@@ -7,16 +7,18 @@ description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
 
 | Export | Signature |
 |---|---|
-| `reveal` | `(targets, { keyframes?, range?, stagger?, shift?, easing?, reducedMotion?, fallback? }) => Controller` |
-| `track` | `(targets, (progress, element) => void, { range? }) => Controller` |
-| `story` | `(targets, { steps, onStep?, range? }) => Controller`: sets `data-sigmoid-step` and `--sigmoid-progress` |
+| `reveal` | `(targets, { keyframes?, range?, stagger?, shift?, axis?, subject?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `track` | `(targets, (progress, element) => void, { range?, axis? }) => Controller` |
+| `story` | `(targets, { steps, onStep?, range?, axis? }) => Controller`: sets `data-sigmoid-step` and `--sigmoid-progress` |
 | `parallax` | `(targets, { distance?, easing?, reducedMotion?, fallback? }) => Controller` |
-| `scrub` | `(targets, keyframes, { source?, axis?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `scrub` | `(targets, keyframes, { source?, axis?, range?, easing?, reducedMotion?, fallback? }) => Controller` |
+| `splitText` | `(target, { by?: "words" \| "chars" }) => { elements, parent, revert() }` |
 | `progress` | `(targets, { source?, axis? }) => Controller` |
 | `init` | `(root = document, { force? }) => stop()`: starts the fallback for `data-sigmoid` |
 | `supportsScrollTimeline` | `() => boolean` |
 | `prefersReducedMotion` | `() => boolean` |
 | `presets` | the keyframes behind the preset names |
+| `Axis` | `"block" \| "inline"` |
 | `parseRange`, `rangeBounds`, `viewProgress` | the view-timeline maths of the fallback |
 
 `targets` is an `Element`, a selector, an iterable of elements, `null` or `undefined`. `reducedMotion` is `"skip"` (default) or `"allow"`.
@@ -61,8 +63,8 @@ A Tailwind CSS v4 `@theme` with `--ease-standard`, `--ease-sigmoid`, `--ease-smo
 | `useReveal` | `(ref, RevealOptions)` |
 | `useParallax` | `(ref, ParallaxOptions)` |
 | `useScrub` | `(ref, keyframes, ScrubOptions)` |
-| `useScrollProgress` | `(ref, { range? }) => number` |
-| `useStory` | `(ref, { steps, range? }) => { step }` |
+| `useScrollProgress` | `(ref, { range?, axis? }) => number` |
+| `useStory` | `(ref, { steps, range?, axis? }) => { step }` |
 | `useReducedMotion` | `() => boolean` |
 
 ## @sweberdev/sigmoid-vue
@@ -75,6 +77,6 @@ A Tailwind CSS v4 `@theme` with `--ease-standard`, `--ease-sigmoid`, `--ease-smo
 | `useReveal` | `(ref, RevealOptions)` |
 | `useParallax` | `(ref, ParallaxOptions)` |
 | `useScrub` | `(ref, keyframes, ScrubOptions)` |
-| `useScrollProgress` | `(ref, { range? }) => Ref<number>` |
-| `useStory` | `(ref, { steps, range? }) => { step: Ref<number> }` |
+| `useScrollProgress` | `(ref, { range?, axis? }) => Ref<number>` |
+| `useStory` | `(ref, { steps, range?, axis? }) => { step: Ref<number> }` |
 | `useReducedMotion` | `() => Ref<boolean>` |

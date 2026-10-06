@@ -10,6 +10,7 @@
         "guides/css",
         "guides/javascript",
         "guides/easing",
+        "guides/recipes",
         "guides/react",
         "guides/vue",
         "guides/reduced-motion"
