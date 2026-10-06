@@ -1,5 +1,16 @@
 # @sweberdev/sigmoid-react
 
+## 1.0.0
+
+### Major Changes
+
+- a3471a8: Sigmoid 1.0: the public API is stable and follows semantic versioning. No API changes since 0.9.0.
+
+### Patch Changes
+
+- Updated dependencies [a3471a8]
+  - @sweberdev/sigmoid@1.0.0
+
 ## 0.9.0
 
 ### Minor Changes
