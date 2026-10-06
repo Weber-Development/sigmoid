@@ -1,6 +1,6 @@
 {
   "name": "@sweberdev/sigmoid-svelte",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Svelte actions for Sigmoid: use:reveal, use:parallax, use:track and use:story on native CSS scroll timelines.",
   "license": "MIT",
   "author": "Seya Weber (https://github.com/sxwxbxr)",
