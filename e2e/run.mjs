@@ -162,7 +162,15 @@ const result = await page.evaluate(async () => {
     for (const v of [top - 900, top - 600, top + 100]) {
       scrollTo(0, v);
       await frames();
-      shown.push(Number.parseInt(getComputedStyle(el).counterReset.split(" ")[1], 10));
+      const cs = getComputedStyle(el);
+      const n = supported
+        ? Number.parseFloat(cs.getPropertyValue("--sigmoid-n"))
+        : Number.parseInt(cs.counterReset.split(" ")[1], 10);
+      shown.push(
+        Number.isNaN(n)
+          ? `NaN(${cs.getPropertyValue("--sigmoid-n")}|${cs.counterReset})`
+          : Math.round(n),
+      );
     }
     stop();
     out.push({
