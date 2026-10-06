@@ -1,6 +1,6 @@
 {
   "name": "@sweberdev/sigmoid-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React components and hooks for Sigmoid: Reveal, Parallax, ScrollProgress and useScrub on native CSS scroll timelines.",
   "license": "MIT",
   "author": "Seya Weber (https://github.com/sxwxbxr)",
