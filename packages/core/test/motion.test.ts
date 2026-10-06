@@ -247,6 +247,6 @@ describe("story", () => {
 describe("presets", () => {
   it("has ten entrances, all ending at the element's own style", () => {
     expect(Object.keys(presets)).toHaveLength(10);
-    expect(presets["flip-up"][0].transform).toContain("rotateX");
+    expect(presets["flip-up"][0]?.transform).toContain("rotateX");
   });
 });
