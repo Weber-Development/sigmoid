@@ -31,6 +31,16 @@ reveal("h2", { keyframes: [{ letterSpacing: "0.3em", opacity: 0 }, {}] });
 
 Ranges: `cover`, `contain`, `entry`, `exit`, `entry-crossing`, `exit-crossing`, each with a percentage, e.g. `"entry 25% contain 50%"`. The [MDN page on animation-range](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-range) explains them with diagrams.
 
+### Horizontal scrolling
+
+`axis: "inline"` makes `reveal`, `track` and `story` follow horizontal scrolling, for a carousel or a horizontal gallery. The element is measured against its nearest horizontal scroll container, like CSS `view(inline)` does:
+
+```ts
+reveal(".slide", { axis: "inline", keyframes: "scale-in" });
+```
+
+Right-to-left layouts are not covered yet.
+
 ### Stagger
 
 Lists and grids look better when the items arrive one after another. `stagger` starts each further element later by that percentage of its range:
@@ -61,6 +71,16 @@ scrub(".gallery-track", [{ transform: "none" }, { transform: "translateX(-75%)" 
 });
 ```
 
+### Part of the scroll distance
+
+`range: [from, to]` runs the animation over a part of the scroll distance, in percent. Below, the sky changes colour only between a quarter and three quarters of the page:
+
+```ts
+scrub(".sky", [{ backgroundColor: "#bde0fe" }, { backgroundColor: "#03045e" }], {
+  range: [25, 75],
+});
+```
+
 ## progress
 
 ```ts
@@ -80,6 +100,17 @@ track(".stat", (p, el) => {
 ```
 
 Progress of the whole page: `track(document.body, (p) => …, { range: "contain" })`. `track` always runs in JavaScript, one passive listener for all elements, and is not affected by reduced motion because it only reports a number.
+
+## splitText
+
+Splits the text of an element into words or characters so they can arrive one after another:
+
+```ts
+const { elements, parent, revert } = splitText("h1"); // or { by: "chars" }
+reveal(elements, { subject: parent, keyframes: "fade-up", stagger: 6 });
+```
+
+`subject` makes the whole headline drive every word, so all words animate while the headline crosses the window, one after another, not each at its own scroll position. `splitText` handles plain text: markup inside the element is replaced, and `revert()` puts it back. Screen readers still read the original text; the pieces are hidden from them with `aria-hidden`.
 
 ## story
 

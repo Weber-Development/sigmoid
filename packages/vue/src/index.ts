@@ -76,7 +76,10 @@ export function useScrollProgress(target: Target, options: TrackOptions = {}): R
           (p) => {
             value.value = p;
           },
-          options.range ? { range: options.range } : {},
+          {
+            ...(options.range ? { range: options.range } : {}),
+            ...(options.axis ? { axis: options.axis } : {}),
+          },
         )
       : undefined;
   };
@@ -92,7 +95,7 @@ export function useScrollProgress(target: Target, options: TrackOptions = {}): R
  */
 export function useStory(
   target: Target,
-  options: { steps: number; range?: string },
+  options: { steps: number; range?: string; axis?: "block" | "inline" },
 ): { step: Ref<number> } {
   const step = ref(0);
   let controller: Controller | undefined;
@@ -105,6 +108,7 @@ export function useStory(
             step.value = s;
           },
           ...(options.range ? { range: options.range } : {}),
+          ...(options.axis ? { axis: options.axis } : {}),
         })
       : undefined;
   };

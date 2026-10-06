@@ -71,11 +71,14 @@ export function useScrollProgress(
   options: TrackOptions = {},
 ): number {
   const [value, setValue] = useState(0);
-  const range = options.range;
+  const { range, axis } = options;
   useEffect(() => {
-    const c = track(ref.current, setValue, range ? { range } : {});
+    const c = track(ref.current, setValue, {
+      ...(range ? { range } : {}),
+      ...(axis ? { axis } : {}),
+    });
     return () => c.cancel();
-  }, [ref, range]);
+  }, [ref, range, axis]);
   return value;
 }
 
@@ -88,14 +91,19 @@ export function useScrollProgress(
  */
 export function useStory(
   ref: RefObject<Element | null>,
-  options: { steps: number; range?: string },
+  options: { steps: number; range?: string; axis?: "block" | "inline" },
 ): { step: number } {
   const [step, setStep] = useState(0);
-  const { steps, range } = options;
+  const { steps, range, axis } = options;
   useEffect(() => {
-    const c = story(ref.current, { steps, onStep: setStep, ...(range ? { range } : {}) });
+    const c = story(ref.current, {
+      steps,
+      onStep: setStep,
+      ...(range ? { range } : {}),
+      ...(axis ? { axis } : {}),
+    });
     return () => c.cancel();
-  }, [ref, steps, range]);
+  }, [ref, steps, range, axis]);
   return { step };
 }
 
@@ -128,6 +136,8 @@ export type RevealProps<T extends ElementType = "div"> = Polymorphic<
     reducedMotion?: "skip" | "allow";
     /** Percent the range starts later. In a list, `index * 8` staggers the items. */
     shift?: number;
+    /** `"inline"` for horizontal scrolling. Default `"block"`. */
+    axis?: "block" | "inline";
   }
 >;
 
@@ -143,10 +153,11 @@ export function Reveal<T extends ElementType = "div">({
   easing,
   reducedMotion,
   shift,
+  axis,
   ...rest
 }: RevealProps<T>) {
   const ref = useRef<Element>(null);
-  useReveal(ref, { keyframes: preset, range, easing, reducedMotion, shift });
+  useReveal(ref, { keyframes: preset, range, easing, reducedMotion, shift, axis });
   return createElement(as ?? "div", { ...rest, ref });
 }
 

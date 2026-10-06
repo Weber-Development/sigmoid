@@ -6,6 +6,7 @@ import {
   progress,
   reveal,
   scrub,
+  splitText,
   story,
   supportsScrollTimeline,
   track,
@@ -248,5 +249,95 @@ describe("presets", () => {
   it("has ten entrances, all ending at the element's own style", () => {
     expect(Object.keys(presets)).toHaveLength(10);
     expect(presets["flip-up"][0]?.transform).toContain("rotateX");
+  });
+});
+
+describe("inline axis and subject", () => {
+  function row(left: number, width = 100) {
+    const el = document.createElement("div");
+    Object.defineProperty(el, "offsetLeft", { value: left });
+    Object.defineProperty(el, "offsetWidth", { value: width });
+    document.body.append(el);
+    return el;
+  }
+
+  it("measures horizontally for axis inline", () => {
+    Object.defineProperty(window, "innerWidth", { value: 1000, configurable: true });
+    const el = row(950); // 50 of 100 px have entered from the right
+    reveal(el, { range: "entry 0% entry 100%", easing: "linear", axis: "inline" });
+    expect(animations[0]?.currentTime).toBe(500);
+  });
+
+  it("passes the axis to the native view timeline", () => {
+    native();
+    reveal(box(0), { axis: "inline" });
+    const timeline = animations[0]?.options.timeline as unknown as
+      | { options: { axis: string } }
+      | undefined;
+    expect(timeline?.options.axis).toBe("inline");
+  });
+
+  it("drives all targets from one subject", () => {
+    const parent = box(750); // 50 of 100 px entered
+    const a = box(0);
+    const b = box(5000);
+    reveal([a, b], { subject: parent, range: "entry 0% entry 100%", easing: "linear" });
+    expect(animations.map((x) => x.currentTime)).toEqual([500, 500]);
+  });
+});
+
+describe("scrub range", () => {
+  it("maps the scroll distance between the range edges", () => {
+    const root = document.documentElement;
+    Object.defineProperty(root, "scrollHeight", { value: 2800, configurable: true });
+    Object.defineProperty(root, "clientHeight", { value: 800, configurable: true });
+    root.scrollTop = 1000; // half way through the page
+    scrub(box(0), [{ opacity: 0 }, { opacity: 1 }], { source: root, range: [25, 75] });
+    expect(animations[0]?.currentTime).toBe(500);
+    native();
+    scrub(box(0), [{ opacity: 0 }, { opacity: 1 }], { source: root, range: [25, 75] });
+    expect(animations[1]?.options.rangeStart).toBe("25%");
+    expect(animations[1]?.options.rangeEnd).toBe("75%");
+  });
+});
+
+describe("splitText", () => {
+  it("splits into words, keeps the text for screen readers and reverts", () => {
+    const el = document.createElement("h1");
+    el.innerHTML = "Scroll  <b>motion</b> now";
+    document.body.append(el);
+    const split = splitText(el);
+    expect(split.elements.map((e) => e.textContent)).toEqual(["Scroll", "motion", "now"]);
+    expect(split.elements[2]?.style.getPropertyValue("--sigmoid-index")).toBe("2");
+    expect(el.textContent).toBe("Scroll motion nowScroll motion now");
+    expect(el.querySelector("[aria-hidden]")?.children).toHaveLength(3);
+    split.revert();
+    expect(el.innerHTML).toBe("Scroll  <b>motion</b> now");
+  });
+
+  it("splits into characters, grouped by word", () => {
+    const el = document.createElement("p");
+    el.textContent = "go on";
+    document.body.append(el);
+    const split = splitText(el, { by: "chars" });
+    expect(split.elements.map((e) => e.textContent).join("")).toBe("goon");
+    expect(el.querySelector("[aria-hidden]")?.children).toHaveLength(2);
+  });
+
+  it("does nothing for empty or missing elements", () => {
+    expect(splitText("#nothing").elements).toEqual([]);
+  });
+});
+
+describe("init count", () => {
+  it("counts up through counter-reset in the fallback", () => {
+    const el = box(750);
+    el.setAttribute("data-sigmoid", "count");
+    el.style.setProperty("--sigmoid-count", "1000");
+    el.style.setProperty("--sigmoid-range", "entry 0% entry 100%");
+    const stop = init();
+    // jsdom resolves custom properties set inline; half way through, ease-out cubic = 0.875.
+    expect(el.style.counterReset).toBe("sigmoid-n 875");
+    stop();
   });
 });
