@@ -1,6 +1,6 @@
 {
   "name": "@sweberdev/sigmoid-vue",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Vue 3 directives and composables for Sigmoid: v-reveal, v-parallax, useScrollProgress and useStory on native CSS scroll timelines.",
   "license": "MIT",
   "author": "Seya Weber (https://github.com/sxwxbxr)",

@@ -1,5 +1,11 @@
 # @sweberdev/sigmoid
 
+## 0.8.0
+
+### Minor Changes
+
+- bbcc417: Edge cases for 1.0: the scroll fallback now mirrors the inline axis in right-to-left scrollers (matching native view timelines), and `overflow: clip` ancestors are covered by the real-browser tests.
+
 ## 0.7.0
 
 ### Minor Changes
