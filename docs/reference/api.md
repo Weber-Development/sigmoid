@@ -64,3 +64,17 @@ A Tailwind CSS v4 `@theme` with `--ease-standard`, `--ease-sigmoid`, `--ease-smo
 | `useScrollProgress` | `(ref, { range? }) => number` |
 | `useStory` | `(ref, { steps, range? }) => { step }` |
 | `useReducedMotion` | `() => boolean` |
+
+## @sweberdev/sigmoid-vue
+
+| Export | Signature |
+|---|---|
+| `vReveal` | directive, value is a preset name or `{ preset?, keyframes?, range?, easing?, shift?, stagger?, reducedMotion? }` |
+| `vParallax` | directive, value is a distance in pixels or `ParallaxOptions` |
+| `SigmoidPlugin` | `app.use(SigmoidPlugin)` registers `v-reveal` and `v-parallax` |
+| `useReveal` | `(ref, RevealOptions)` |
+| `useParallax` | `(ref, ParallaxOptions)` |
+| `useScrub` | `(ref, keyframes, ScrubOptions)` |
+| `useScrollProgress` | `(ref, { range? }) => Ref<number>` |
+| `useStory` | `(ref, { steps, range? }) => { step: Ref<number> }` |
+| `useReducedMotion` | `() => Ref<boolean>` |
