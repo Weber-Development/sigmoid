@@ -1,22 +1,16 @@
-# Release checklist (package-launch)
+# Release checklist
 
 | Item | Status |
 |---|---|
-| Repo `Weber-Development/sigmoid` | created by the werkbank, private, `NPM_TOKEN` set |
-| npm `@sweberdev/sigmoid`, `@sweberdev/sigmoid-react` | changeset for 0.1.0 on `main`; merging the version PR publishes |
-| packages.sweber.dev | entry, docs config and live demo in `sxwxbxr/portfoliov3` (branch `packages/sigmoid`) |
-| Docs | Markdown in `docs/` with `nav.json`, rendered at packages.sweber.dev/sigmoid/docs once the repo is public |
-| Pro | none for now (decision 2026-10-05); idea: scroll-story sections, preset pack, curve editor |
+| Repo `Weber-Development/sigmoid` | public, MIT |
+| npm `@sweberdev/sigmoid`, `-react`, `-vue`, `-svelte` | published with provenance by the release workflow, one fixed version |
+| packages.sweber.dev | package page, docs, live demo, curve editor and release posts in `sxwxbxr/portfoliov3` |
+| Pro | none (decision 2026-10-05) |
 | Polar | not needed |
 | Trademark check "Sigmoid" | open (Seya) |
 
-## Open (Seya)
+## Per release
 
-- [ ] Merge the version PR so 0.1.0 goes to npm.
-- [ ] Say "öffentlich machen" so the werkbank makes the repo public (needed for the docs).
-- [ ] Trademark check.
-
-## Later
-
-- End-to-end test in a real browser in CI (native and fallback were compared by hand in Chromium on 2026-10-05: same progress at the same scroll position).
-- Fallback for view timelines inside scroll containers other than the page.
+1. Feature PR with a changeset; CI runs unit tests, size budgets and the browser tests (Chromium, Firefox, WebKit).
+2. Merge the version PR the changesets bot opens; the release workflow publishes.
+3. portfoliov3: release post `content/blog/sigmoid-<version>-released.md`, release entry in `content/packages/sigmoid.json`, vendored copy of the core source for the demo.
