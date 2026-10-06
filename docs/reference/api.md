@@ -15,6 +15,7 @@ description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
 | `splitText` | `(target, { by?: "words" \| "chars" }) => { elements, parent, revert() }` |
 | `progress` | `(targets, { source?, axis? }) => Controller` |
 | `init` | `(root = document, { force? }) => stop()`: starts the fallback for `data-sigmoid`, and linked animations (`data-sigmoid-follow`) in every browser |
+| `refresh` | `() => void`: measures every fallback element again on the next frame. Needed only after moving elements without resizing anything |
 | `supportsScrollTimeline` | `() => boolean` |
 | `prefersReducedMotion` | `() => boolean` |
 | `presets` | the keyframes behind the preset names |
