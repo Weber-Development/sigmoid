@@ -1,0 +1,90 @@
+{
+  "counts": [30, 300],
+  "steps": 150,
+  "runs": 5,
+  "sizes": {
+    "No library": 32,
+    "Sigmoid (CSS only)": 32,
+    "Sigmoid (native)": 2275,
+    "Sigmoid (fallback)": 2279,
+    "GSAP ScrollTrigger": 45345,
+    "Motion": 22935,
+    "AOS (fires once)": 5405
+  },
+  "runtime": {
+    "30": {
+      "No library": {
+        "script": 1.5,
+        "task": 70.6,
+        "style": 0
+      },
+      "Sigmoid (CSS only)": {
+        "script": 1.4,
+        "task": 155.8,
+        "style": 32.8
+      },
+      "Sigmoid (native)": {
+        "script": 1.3,
+        "task": 142.2,
+        "style": 30.7
+      },
+      "Sigmoid (fallback)": {
+        "script": 27.2,
+        "task": 143.2,
+        "style": 34.6
+      },
+      "GSAP ScrollTrigger": {
+        "script": 39.2,
+        "task": 154,
+        "style": 18.7
+      },
+      "Motion": {
+        "script": 113.9,
+        "task": 247,
+        "style": 24.7
+      },
+      "AOS (fires once)": {
+        "script": 8.1,
+        "task": 77.1,
+        "style": 0
+      }
+    },
+    "300": {
+      "No library": {
+        "script": 1.5,
+        "task": 96.8,
+        "style": 0
+      },
+      "Sigmoid (CSS only)": {
+        "script": 0.8,
+        "task": 709.8,
+        "style": 104.9
+      },
+      "Sigmoid (native)": {
+        "script": 0.9,
+        "task": 972,
+        "style": 131.9
+      },
+      "Sigmoid (fallback)": {
+        "script": 74.4,
+        "task": 444,
+        "style": 158.1
+      },
+      "GSAP ScrollTrigger": {
+        "script": 61.2,
+        "task": 376,
+        "style": 74.2
+      },
+      "Motion": {
+        "script": 731.1,
+        "task": 1049.4,
+        "style": 66
+      },
+      "AOS (fires once)": {
+        "script": 16.8,
+        "task": 114.6,
+        "style": 0
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ Sigmoid is a small layer on top of that platform feature:
 - **A fallback that stays small.** Where scroll timelines are missing, one passive scroll listener drives the same animations. It computes progress with the same range maths as the CSS spec, so both paths look the same.
 - **Curves with character.** Springs, the logistic S-curve and Bézier curves as one `Easing` object: call it in JavaScript or use it in CSS as `linear()`. The springs are physically correct and also report their natural duration.
 - **Reduced motion by default.** When the user asks the system for less motion, reveals and parallax are skipped and content is simply shown.
-- **Small.** About 2.8 kB min+gzip for `reveal` + `init`, 4.5 kB for everything. A size check in CI keeps it that way.
+- **Small.** About 3.1 kB min+gzip for `reveal` + `init`, 4.9 kB for everything. A size check in CI keeps it that way.
 
 ## When to use something else
 
