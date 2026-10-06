@@ -55,6 +55,16 @@ The element shows its number through CSS, so it stays empty in the markup: give 
 
 `data-sigmoid-axis="inline"` follows the nearest horizontal scroll container.
 
+### Pinned sections
+
+```html
+<section data-sigmoid-pin style="--sigmoid-pin-length: 300vh">
+  <div> … stays in view while you scroll through the section … </div>
+</section>
+```
+
+`data-sigmoid-pin` makes the section tall (`--sigmoid-pin-length`, default `300vh`) and keeps its first child in view with `position: sticky`. Add `story()` from the JavaScript API when the content should change in steps.
+
 ### Staggered lists
 
 ```html

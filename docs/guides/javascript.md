@@ -101,6 +101,23 @@ track(".stat", (p, el) => {
 
 Progress of the whole page: `track(document.body, (p) => …, { range: "contain" })`. `track` always runs in JavaScript, one passive listener for all elements, and is not affected by reduced motion because it only reports a number.
 
+## Linked animations
+
+One element can drive the animation of others, for example a tall stage that fades in a caption somewhere else. Pass the driving element as `subject`:
+
+```ts
+reveal(".caption", { subject: document.querySelector("#stage")!, keyframes: "fade-up", range: "cover 10% cover 40%" });
+```
+
+The same in markup, started by `init()` in every browser (the browser still drives it natively, because `init()` creates the view timeline in JavaScript):
+
+```html
+<div id="stage" data-sigmoid-timeline="stage" style="height: 120vh">…</div>
+<p data-sigmoid-follow="stage" data-sigmoid-preset="fade-up">Caption</p>
+```
+
+A follower takes `--sigmoid-range`, `--sigmoid-easing`, `--sigmoid-index` and `--sigmoid-stagger` like other elements. The default range is `cover 0% cover 40%` of the stage.
+
 ## splitText
 
 Splits the text of an element into words or characters so they can arrive one after another:

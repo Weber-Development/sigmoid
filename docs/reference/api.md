@@ -14,7 +14,7 @@ description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
 | `scrub` | `(targets, keyframes, { source?, axis?, range?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `splitText` | `(target, { by?: "words" \| "chars" }) => { elements, parent, revert() }` |
 | `progress` | `(targets, { source?, axis? }) => Controller` |
-| `init` | `(root = document, { force? }) => stop()`: starts the fallback for `data-sigmoid` |
+| `init` | `(root = document, { force? }) => stop()`: starts the fallback for `data-sigmoid`, and linked animations (`data-sigmoid-follow`) in every browser |
 | `supportsScrollTimeline` | `() => boolean` |
 | `prefersReducedMotion` | `() => boolean` |
 | `presets` | the keyframes behind the preset names |
@@ -52,6 +52,17 @@ interface Easing {
 ## @sweberdev/sigmoid/tailwind.css
 
 A Tailwind CSS v4 `@theme` with `--ease-standard`, `--ease-sigmoid`, `--ease-smooth`, `--ease-bouncy` and `--ease-wobbly`. See [Easing](../guides/easing.md#tailwind-css).
+
+## @sweberdev/sigmoid-svelte
+
+Actions, imported by their plain names: `use:reveal`, `use:parallax`, `use:track`, `use:story`.
+
+| Action | Parameter |
+|---|---|
+| `reveal` | a preset name or `{ preset?, keyframes?, range?, easing?, shift?, stagger?, axis?, subject?, reducedMotion? }` |
+| `parallax` | a distance in pixels or `ParallaxOptions` |
+| `track` | `{ onProgress(progress), range?, axis? }` |
+| `story` | `{ steps, onStep?(step), range?, axis? }` |
 
 ## @sweberdev/sigmoid-react
 
