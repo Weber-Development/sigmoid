@@ -53,6 +53,7 @@ useParallax(ref, { distance: 40 });
 useScrub(ref, [{ opacity: 1 }, { opacity: 0 }]);
 const reduced = useReducedMotion();
 const progress = useScrollProgress(ref, { range: "cover" }); // 0 to 1, re-renders on change
+const { step } = useStory(ref, { steps: 3 }); // scroll story, re-renders when the step changes
 ```
 
 The animation restarts only when the options change by value, not on every render.

@@ -81,8 +81,29 @@ track(".stat", (p, el) => {
 
 Progress of the whole page: `track(document.body, (p) => …, { range: "contain" })`. `track` always runs in JavaScript, one passive listener for all elements, and is not affected by reduced motion because it only reports a number.
 
+## story
+
+A scroll story is a tall section whose content stays pinned while the reader scrolls through a few steps. CSS does the pinning with `position: sticky`; `story` tells you which step is active:
+
+```html
+<section id="how" style="height: 300vh">
+  <div style="position: sticky; top: 0; height: 100vh">
+    <p class="step">One</p><p class="step">Two</p><p class="step">Three</p>
+  </div>
+</section>
+```
+
+```ts
+story("#how", {
+  steps: 3,
+  onStep: (i) => console.log("step", i), // 0, 1, 2
+});
+```
+
+`story` sets `data-sigmoid-step` and `--sigmoid-progress` (0 to 1) on the section, so CSS alone can react, e.g. `#how[data-sigmoid-step="1"] .step:nth-child(2) { opacity: 1 }`. The default range is `contain`: for a section taller than the window, exactly the time its sticky content is pinned.
+
 ## Fallback
 
-Where `ViewTimeline` and `ScrollTimeline` are missing, Sigmoid creates the same Web Animation, pauses it and sets its time from the scroll position on each animation frame. One passive listener serves all elements. The range maths follow the CSS spec, so native and fallback look the same. The fallback measures elements relative to the page scroll; inside other scroll containers use `scrub` with `source`.
+Where `ViewTimeline` and `ScrollTimeline` are missing, Sigmoid creates the same Web Animation, pauses it and sets its time from the scroll position on each animation frame. One passive listener serves all elements. The range maths follow the CSS spec, so native and fallback look the same. Like `view()`, the fallback measures each element against its nearest scroll container, so reveals inside a scrolling panel or a carousel work the same as on the page.
 
 Pass `fallback: true` to force it, e.g. to compare both paths.

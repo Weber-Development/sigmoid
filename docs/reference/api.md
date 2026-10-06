@@ -9,6 +9,7 @@ description: Every export of @sweberdev/sigmoid and @sweberdev/sigmoid-react.
 |---|---|
 | `reveal` | `(targets, { keyframes?, range?, stagger?, shift?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `track` | `(targets, (progress, element) => void, { range? }) => Controller` |
+| `story` | `(targets, { steps, onStep?, range? }) => Controller`: sets `data-sigmoid-step` and `--sigmoid-progress` |
 | `parallax` | `(targets, { distance?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `scrub` | `(targets, keyframes, { source?, axis?, easing?, reducedMotion?, fallback? }) => Controller` |
 | `progress` | `(targets, { source?, axis? }) => Controller` |
@@ -46,6 +47,10 @@ interface Easing {
 
 `data-sigmoid` presets, `--sigmoid-*` custom properties and the `--sigmoid-ease-*` variables. See [CSS only](../guides/css.md).
 
+## @sweberdev/sigmoid/tailwind.css
+
+A Tailwind CSS v4 `@theme` with `--ease-standard`, `--ease-sigmoid`, `--ease-smooth`, `--ease-bouncy` and `--ease-wobbly`. See [Easing](../guides/easing.md#tailwind-css).
+
 ## @sweberdev/sigmoid-react
 
 | Export | Props / signature |
@@ -57,4 +62,5 @@ interface Easing {
 | `useParallax` | `(ref, ParallaxOptions)` |
 | `useScrub` | `(ref, keyframes, ScrubOptions)` |
 | `useScrollProgress` | `(ref, { range? }) => number` |
+| `useStory` | `(ref, { steps, range? }) => { step }` |
 | `useReducedMotion` | `() => boolean` |
