@@ -11,6 +11,7 @@
         "guides/javascript",
         "guides/easing",
         "guides/recipes",
+        "guides/migrating",
         "guides/react",
         "guides/vue",
         "guides/svelte",
@@ -20,7 +21,12 @@
     },
     {
       "label": "Reference",
-      "items": ["reference/api", "reference/browser-support"]
+      "items": [
+        "reference/api",
+        "reference/browser-support",
+        "reference/stability",
+        "reference/benchmark"
+      ]
     }
   ]
 }

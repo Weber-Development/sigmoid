@@ -180,6 +180,25 @@ const result = await page.evaluate(async () => {
       range: true,
     });
   }
+  // The layout changes after the animation started: 300 px are added above the element.
+  {
+    const el = document.getElementById("p");
+    const c = S.reveal(el, { keyframes: kf, easing: "linear", range: "cover", fallback: true });
+    const spacer = document.createElement("div");
+    spacer.style.height = "300px";
+    document.body.prepend(spacer);
+    const got = [];
+    for (const v of [1300, 1600, 1800]) {
+      scrollTo(0, v);
+      await frames();
+      await frames();
+      got.push(opacity(el));
+    }
+    c.cancel();
+    spacer.remove();
+    scrollTo(0, 0);
+    out.push({ name: "layout change", got, expected: [0.3, 0.6, 0.8] });
+  }
   return { out, supported };
 });
 await browser.close();
