@@ -27,10 +27,12 @@ copyFileSync(
 writeFileSync(
   join(dir, "t.html"),
   `<!doctype html><link rel="stylesheet" href="sigmoid.css"><body style="margin:0">
-<div style="height:1500px"></div><div id="p" style="height:200px">page</div><div style="height:1500px"></div>
+<div style="height:1500px"></div><div style="overflow:clip"><div id="p" style="height:200px">page</div></div>
+<div style="zoom:2"><div id="z" style="height:100px">zoom</div></div><div style="height:1500px"></div>
 <div id="box" style="height:400px;overflow-y:auto"><div style="height:1000px"></div>
 <div id="c" style="height:100px">container</div><div style="height:1000px"></div></div>
 <div id="hbox" style="width:400px;overflow-x:auto;white-space:nowrap"><div style="display:inline-block;width:1000px;height:20px"></div><div id="h" style="display:inline-block;width:100px;height:50px">h</div><div style="display:inline-block;width:1000px;height:20px"></div></div>
+<div id="rbox" dir="rtl" style="width:400px;overflow-x:auto;white-space:nowrap"><div style="display:inline-block;width:1000px;height:20px"></div><div id="r" style="display:inline-block;width:100px;height:50px">r</div><div style="display:inline-block;width:1000px;height:20px"></div></div>
 <div style="height:2000px"></div>
 <div id="n" data-sigmoid="count" style="--sigmoid-count:1000;height:60px"></div>
 <div id="stage" data-sigmoid-timeline="stage" style="height:1000px"></div>
@@ -53,6 +55,7 @@ const result = await page.evaluate(async () => {
   const kf = [{ opacity: 0 }, { opacity: 1 }];
   const box = document.getElementById("box");
   const hbox = document.getElementById("hbox");
+  const rbox = document.getElementById("rbox");
   const supported = S.supportsScrollTimeline();
   const cases = [
     {
@@ -61,6 +64,15 @@ const result = await page.evaluate(async () => {
       options: { range: "cover" },
       values: [1000, 1300, 1500, 1700, 1900],
       expected: [0.3, 0.6, 0.8, 1, 1],
+      scroll: (v) => scrollTo(0, v),
+      reset: () => scrollTo(0, 0),
+    },
+    {
+      name: "zoom",
+      id: "z",
+      options: { range: "cover" },
+      values: [1600, 1800, 2000, 2200],
+      expected: [0.7, 0.9, 1, 1],
       scroll: (v) => scrollTo(0, v),
       reset: () => scrollTo(0, 0),
     },
@@ -88,6 +100,19 @@ const result = await page.evaluate(async () => {
       },
       reset: () => {
         hbox.scrollLeft = 0;
+      },
+    },
+    {
+      name: "inline axis right to left",
+      id: "r",
+      options: { range: "cover", axis: "inline" },
+      values: [700, 800, 900, 1000],
+      expected: [0.2, 0.4, 0.6, 0.8],
+      scroll: (v) => {
+        rbox.scrollLeft = -v;
+      },
+      reset: () => {
+        rbox.scrollLeft = 0;
       },
     },
   ];
