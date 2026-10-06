@@ -3,7 +3,7 @@ title: Stability
 description: What stays the same in 1.x, how versions are numbered and how things are deprecated.
 ---
 
-Sigmoid follows [semantic versioning](https://semver.org). From 1.0.0 on:
+Sigmoid follows [semantic versioning](https://semver.org). The API listed in this documentation is frozen as of 0.9.0, the release candidate: 1.0.0 will contain no API changes, only fixes found during the candidate phase. From 1.0.0 on:
 
 - **Patch** (1.0.x): bug fixes only.
 - **Minor** (1.x.0): new features, new options with defaults that keep the old behaviour, new exports. Nothing breaks.
