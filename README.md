@@ -1,4 +1,4 @@
-# Sigmoid
+# Sigmoid Motion
 
 Scroll motion without the JavaScript tax. Sigmoid runs reveals, parallax and scroll-linked animations on **native CSS scroll timelines**, ships **spring and S-curve easings as CSS `linear()`**, falls back to one tiny scroll listener where needed and **respects reduced motion by default**. About 3 kB for a reveal.
 

@@ -1,5 +1,5 @@
 ---
-title: Why Sigmoid
+title: Why Sigmoid Motion
 description: Scroll motion on native CSS scroll timelines, with easing curves that actually feel physical.
 ---
 
